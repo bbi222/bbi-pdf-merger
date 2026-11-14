@@ -200,7 +200,11 @@
 
   /* ---------- 좁은 화면 ---------- */
   @media (max-width: 880px) {
-    .work { flex-direction: column; }
+    html, body { height: auto; }
+    body { min-height: 100dvh; }
+    .work { flex: none; flex-direction: column; padding: 14px 12px; gap: 14px; }
+    .top { padding: 10px 12px; }
+    .foot { padding: 10px 12px; }
     .queue, .preview { flex: none; min-width: 0; }
     .queue { max-height: 52vh; }
     .list { max-height: 40vh; }
@@ -261,7 +265,7 @@
       <div class="pholder" id="pholder">
         <div class="bob"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAUElEQVR42mNkgAJtbeP/DEjg6tWzjAzoAF0RVjFkgboTW/7XndjyH5scEwORgAWZ02Thw4hXNTFuZMSnGNn3jMTYcvXqWUZGYp2E19fIgQ4Ab2kgNgzpDgkAAAAASUVORK5CYII=" width="60" height="60" alt="" aria-hidden="true" ></div>
         <b>미리볼 파일이 없어요</b>
-        <p>왼쪽 목록에서 파일을 클릭하면 이곳에 바로 보여요.<br>(휴대폰 브라우저는 미리보기가 안 보일 수 있어요. 병합·저장은 그대로 돼요.)</p>
+        <p>목록에서 파일을 클릭하면 이곳에 바로 보여요.<br>(휴대폰 브라우저는 미리보기가 안 보일 수 있어요. 병합·저장은 그대로 돼요.)</p>
       </div>
       <iframe id="viewer" title="PDF 미리보기" hidden></iframe>
     </div>
