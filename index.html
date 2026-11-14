@@ -121,7 +121,7 @@
 
   .list { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; position: relative; }
   .list.drag::after {
-    content: "여기에 놓으면 추가돼요"; position: absolute; inset: 8px; z-index: 5;
+    content: attr(data-drop); position: absolute; inset: 8px; z-index: 5;
     display: flex; align-items: center; justify-content: center;
     background: rgba(240,240,240,.94); border: var(--px) dashed var(--mint-d);
     font-weight: 800; font-size: 1.05rem;
@@ -163,6 +163,8 @@
   .seg button { border: 0; background: transparent; padding: 3px 10px; font-size: .78rem; font-weight: 800; cursor: pointer; }
   .seg button + button { border-left: var(--px) solid var(--ink); }
   .seg button.on { background: var(--ink); color: var(--bg); }
+  .lang { margin-left: 4px; }
+  .lang button { padding: 3px 9px; }
   .pstatus { font-size: .76rem; font-weight: 700; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .pbody { flex: 1; position: relative; background: #525659; min-height: 260px; }
   .pbody iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; }
@@ -229,50 +231,52 @@
   <div class="brand">
     <img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAYUlEQVR42r2RwQ3AMAgDQ9UFzJZMlJUyDRmBvkJom9Bf/QLJtnRAAKxs1HsnXwDYSgAslhwlUWutDDMBMFV9mZj5tp+7thhm5mmstS4DIpLDPMF+ahQRp3aor4OPmbIXRl1bWJS+YQGYogAAAABJRU5ErkJggg==" width="40" height="48" alt="" aria-hidden="true" >
     <div>
-      <h1>PDF 병합기</h1>
+      <h1 data-i18n="h1">PDF 병합기</h1>
       <div class="sub">bbi · a_small_dot <i>■</i></div>
     </div>
   </div>
 
-  <div class="tools" role="toolbar" aria-label="파일 관리">
-    <button class="btn primary" id="btnAdd"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAKUlEQVR42mNkgAJBQcH/MPb79+8ZGRgYGJgY8ABGZB3oAK9O/MaS7SAAK2kJPpMh5wcAAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t">파일 추가</span></button>
+  <div class="tools" role="toolbar" data-i18n-label="tb_label" aria-label="파일 관리">
+    <button class="btn primary" id="btnAdd"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAKUlEQVR42mNkgAJBQcH/MPb79+8ZGRgYGJgY8ABGZB3oAK9O/MaS7SAAK2kJPpMh5wcAAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t" data-i18n="add">파일 추가</span></button>
     <span class="sep"></span>
-    <button class="btn" id="btnUp" title="선택한 파일을 위로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAMElEQVR42mNgQAOCgoL/0cWYsClAV8iEywRkPhMuK5DFGXHpfv/+PSNWN+ECRCkCACc7DGpXaJeUAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">위로</span></button>
-    <button class="btn" id="btnDown" title="선택한 파일을 아래로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANklEQVR42mNkQAKCgoL/Yez3798zwthMDEQAohQxoluDDt6/f8/IhG4/ugIU69AV4tLIgMtqAPf+FHUGJYobAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">아래로</span></button>
-    <button class="btn" id="btnSort" title="이름순으로 정렬"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAHElEQVR42mMUFBT8z0AOYMSm8/3794yk6UTXAQAM5Ak2Bq5YBQAAAABJRU5ErkJggg==" width="14" height="10" alt="" aria-hidden="true" ><span class="t">이름순</span></button>
-    <button class="btn" id="btnRange" title="병합할 페이지 범위 수정"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANElEQVR42r3KsQ0AMAwCQTwC+0/GFIxAKjdWnDJfvg5YIhmSwQtIiqQ7/ASSrKAa9bBdEx0f7jYwTpLV+QAAAABJRU5ErkJggg==" width="18" height="14" alt="" aria-hidden="true" ><span class="t">페이지 범위</span></button>
+    <button class="btn" id="btnUp" data-i18n-title="title_up" title="선택한 파일을 위로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAMElEQVR42mNgQAOCgoL/0cWYsClAV8iEywRkPhMuK5DFGXHpfv/+PSNWN+ECRCkCACc7DGpXaJeUAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t" data-i18n="up">위로</span></button>
+    <button class="btn" id="btnDown" data-i18n-title="title_down" title="선택한 파일을 아래로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANklEQVR42mNkQAKCgoL/Yez3798zwthMDEQAohQxoluDDt6/f8/IhG4/ugIU69AV4tLIgMtqAPf+FHUGJYobAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t" data-i18n="down">아래로</span></button>
+    <button class="btn" id="btnSort" data-i18n-title="title_sort" title="이름순으로 정렬"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAHElEQVR42mMUFBT8z0AOYMSm8/3794yk6UTXAQAM5Ak2Bq5YBQAAAABJRU5ErkJggg==" width="14" height="10" alt="" aria-hidden="true" ><span class="t" data-i18n="sort">이름순</span></button>
+    <button class="btn" id="btnRange" data-i18n-title="title_range" title="병합할 페이지 범위 수정"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANElEQVR42r3KsQ0AMAwCQTwC+0/GFIxAKjdWnDJfvg5YIhmSwQtIiqQ7/ASSrKAa9bBdEx0f7jYwTpLV+QAAAABJRU5ErkJggg==" width="18" height="14" alt="" aria-hidden="true" ><span class="t" data-i18n="range">페이지 범위</span></button>
     <span class="sep"></span>
-    <button class="btn danger" id="btnDel" title="선택한 파일 삭제"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42q2PsQkAIBADL26Q/Yf8EWJjIfKChdekSAicWNgOB1UlAHVli+0kSZcA4+Xk30g3s91wAr2QGfiWFxinAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">선택 삭제</span></button>
-    <button class="btn danger" id="btnClear" title="목록 전체 비우기"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVR42mNgQAKCgoL/kflMDHgAE7ouZN2M6EYhA0Zs9r1//54RQyVJDgIA4s8KA6b3thwAAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t">전체 비우기</span></button>
+    <button class="btn danger" id="btnDel" data-i18n-title="title_del" title="선택한 파일 삭제"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42q2PsQkAIBADL26Q/Yf8EWJjIfKChdekSAicWNgOB1UlAHVli+0kSZcA4+Xk30g3s91wAr2QGfiWFxinAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t" data-i18n="del">선택 삭제</span></button>
+    <button class="btn danger" id="btnClear" data-i18n-title="title_clear" title="목록 전체 비우기"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVR42mNgQAKCgoL/kflMDHgAE7ouZN2M6EYhA0Zs9r1//54RQyVJDgIA4s8KA6b3thwAAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t" data-i18n="clear">전체 비우기</span></button>
+    <span class="sep"></span>
+    <div class="seg lang" role="group" aria-label="Language / 언어"><button type="button" data-lang="ko">KR</button><button type="button" data-lang="en">EN</button></div>
   </div>
 </header>
 
 <main class="work">
-  <section class="panel queue" aria-label="대기 파일 목록">
+  <section class="panel queue" data-i18n-label="queue_label" aria-label="대기 파일 목록">
     <header>
       <span><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mMUFBT8z4AE3r9/z8iABlgYGBgYWltb4QLV1dX/sSpCBsgaoJoYmBiIANRTxIjuO2wAACZ6DELfu8qKAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ></span>
-      <span style="flex:1">대기 파일 <span id="count">(0건)</span></span>
-      <span class="hint">PDF를 끌어다 놓아도 돼요</span>
+      <span style="flex:1"><span data-i18n="queue">대기 파일</span> <span id="count">(0건)</span></span>
+      <span class="hint" data-i18n="queue_hint">PDF를 끌어다 놓아도 돼요</span>
     </header>
-    <div class="list" id="list" role="listbox" aria-label="PDF 목록"></div>
+    <div class="list" id="list" role="listbox" aria-label="PDF"></div>
   </section>
 
-  <section class="panel preview" aria-label="미리보기">
+  <section class="panel preview" data-i18n-label="prev_label" aria-label="미리보기">
     <header>
-      <div class="seg" role="group" aria-label="미리보기 종류">
-        <button id="segOne" class="on" type="button">선택한 파일</button>
-        <button id="segAll" type="button">전체 병합본</button>
+      <div class="seg" role="group" data-i18n-label="seg_label" aria-label="미리보기 종류">
+        <button id="segOne" class="on" type="button" data-i18n="seg_one">선택한 파일</button>
+        <button id="segAll" type="button" data-i18n="seg_all">전체 병합본</button>
       </div>
-      <span class="pstatus" id="pstatus" aria-live="polite">파일을 클릭하면 내용이 보여요</span>
-      <button class="btn small" id="btnRefresh" type="button"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAM0lEQVR42mNkYGBgEBQU/M+ABt6/f8/IAJNEV4Aihk03siImXJLYOVgUMWFThMxnJOQLAK0TFl/rtYEqAAAAAElFTkSuQmCC" width="16" height="14" alt="" aria-hidden="true" ><span>새로고침</span></button>
+      <span class="pstatus" id="pstatus" aria-live="polite" data-i18n="pstatus_idle">파일을 클릭하면 내용이 보여요</span>
+      <button class="btn small" id="btnRefresh" type="button"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAM0lEQVR42mNkYGBgEBQU/M+ABt6/f8/IAJNEV4Aihk03siImXJLYOVgUMWFThMxnJOQLAK0TFl/rtYEqAAAAAElFTkSuQmCC" width="16" height="14" alt="" aria-hidden="true" ><span data-i18n="refresh">새로고침</span></button>
     </header>
     <div class="pbody">
       <div class="pholder" id="pholder">
         <div class="bob"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVR42o2QwQ0AIAgDqRuwfNfsCPjRhBhU7lkaSoEt3D0sIQl2cppKLQskg2RUs2FdqthW/E3Db/Nuj06sJKB7/7N1fvoEudkfG6aulRUAAAAASUVORK5CYII=" width="60" height="60" alt="" aria-hidden="true" ></div>
-        <b>미리볼 파일이 없어요</b>
-        <p>목록에서 파일을 클릭하면 이곳에 바로 보여요.<br>(휴대폰 브라우저는 미리보기가 안 보일 수 있어요. 병합·저장은 그대로 돼요.)</p>
+        <b data-i18n="ph_b">미리볼 파일이 없어요</b>
+        <p><span data-i18n="ph_p1">목록에서 파일을 클릭하면 이곳에 바로 보여요.</span><br><span data-i18n="ph_p2">(휴대폰 브라우저는 미리보기가 안 보일 수 있어요. 병합·저장은 그대로 돼요.)</span></p>
       </div>
-      <iframe id="viewer" title="PDF 미리보기" hidden></iframe>
+      <iframe id="viewer" title="PDF preview" hidden></iframe>
     </div>
   </section>
 </main>
@@ -280,7 +284,7 @@
 <footer class="foot">
   <div class="safe">
     <img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAQklEQVR42mNkgAJBQcH/DGjg/fv3jAzICtAVYYhhMwVZnBGXAmTAwsDAwNDa2goXqK6uxuAzMRABMBQhmwIDRLkJAPr2FSt2Nab0AAAAAElFTkSuQmCC" width="18" height="16" alt="" aria-hidden="true" >
-    <div>내 파일은 서버로 올라가지 않아요 <small>· 브라우저 안에서만 처리</small></div>
+    <div><span data-i18n="safe1">내 파일은 서버로 올라가지 않아요</span> <small data-i18n="safe2">· 브라우저 안에서만 처리</small></div>
   </div>
   <div class="stat" id="stat" aria-live="polite">총 0개 파일 · 0 페이지</div>
   <button class="btn primary big" id="btnMerge" disabled><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mNkQAKCgoL/Yez3798zwthMDEQARnQT0MH79+8ZmdCNRleAYh26QlwaGXBZzYjPPTAAAH7BFaZwrSDIAAAAAElFTkSuQmCC" width="27" height="21" alt="" aria-hidden="true" ><span id="mergeLabel">병합하고 저장</span></button>
@@ -294,6 +298,89 @@
   'use strict';
   const ICONS = {"file": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAYUlEQVR42r2RwQ3AMAgDQ9UFzJZMlJUyDRmBvkJom9Bf/QLJtnRAAKxs1HsnXwDYSgAslhwlUWutDDMBMFV9mZj5tp+7thhm5mmstS4DIpLDPMF+ahQRp3aor4OPmbIXRl1bWJS+YQGYogAAAABJRU5ErkJggg==", "w": 10, "h": 12}, "plus": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAKUlEQVR42mNkgAJBQcH/MPb79+8ZGRgYGJgY8ABGZB3oAK9O/MaS7SAAK2kJPpMh5wcAAAAASUVORK5CYII=", "w": 7, "h": 7}, "up": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAMElEQVR42mNgQAOCgoL/0cWYsClAV8iEywRkPhMuK5DFGXHpfv/+PSNWN+ECRCkCACc7DGpXaJeUAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "down": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANklEQVR42mNkQAKCgoL/Yez3798zwthMDEQAohQxoluDDt6/f8/IhG4/ugIU69AV4tLIgMtqAPf+FHUGJYobAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "pencil": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANElEQVR42r3KsQ0AMAwCQTwC+0/GFIxAKjdWnDJfvg5YIhmSwQtIiqQ7/ASSrKAa9bBdEx0f7jYwTpLV+QAAAABJRU5ErkJggg==", "w": 9, "h": 7}, "trash": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42q2PsQkAIBADL26Q/Yf8EWJjIfKChdekSAicWNgOB1UlAHVli+0kSZcA4+Xk30g3s91wAr2QGfiWFxinAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "sort": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAHElEQVR42mMUFBT8z0AOYMSm8/3794yk6UTXAQAM5Ak2Bq5YBQAAAABJRU5ErkJggg==", "w": 7, "h": 5}, "sparkle": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVR42mNgQAKCgoL/kflMDHgAE7ouZN2M6EYhA0Zs9r1//54RQyVJDgIA4s8KA6b3thwAAAAASUVORK5CYII=", "w": 7, "h": 7}, "dl": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mNkQAKCgoL/Yez3798zwthMDEQARnQT0MH79+8ZmdCNRleAYh26QlwaGXBZzYjPPTAAAH7BFaZwrSDIAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "refresh": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAM0lEQVR42mNkYGBgEBQU/M+ABt6/f8/IAJNEV4Aihk03siImXJLYOVgUMWFThMxnJOQLAK0TFl/rtYEqAAAAAElFTkSuQmCC", "w": 8, "h": 7}, "lock": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAQklEQVR42mNkgAJBQcH/DGjg/fv3jAzICtAVYYhhMwVZnBGXAmTAwsDAwNDa2goXqK6uxuAzMRABMBQhmwIDRLkJAPr2FSt2Nab0AAAAAElFTkSuQmCC", "w": 9, "h": 8}, "folder": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mMUFBT8z4AE3r9/z8iABlgYGBgYWltb4QLV1dX/sSpCBsgaoJoYmBiIANRTxIjuO2wAACZ6DELfu8qKAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "eye": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVR42o2QwQ0AIAgDqRuwfNfsCPjRhBhU7lkaSoEt3D0sIQl2cppKLQskg2RUs2FdqthW/E3Db/Nuj06sJKB7/7N1fvoEudkfG6aulRUAAAAASUVORK5CYII=", "w": 10, "h": 10}, "cloud": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAFCAYAAABxeg0vAAAAO0lEQVR42mNkQAOCgoL/Yez3798zosszoit89+4dXFJISAi7RkFBwf/4gKCg4H+4zYQUo2tkRHYzMQAAnpJV7AJp2TUAAAAASUVORK5CYII=", "w": 12, "h": 5}, "warn": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAO0lEQVR42o2PwQ0AMAgC0Q3Yf0cdgX4bTav3IzEHAgWSwg+SkqR66Fjgr5o7r0w2jc1Ma6aI6KbxZQAH7rAR/at6iHcAAAAASUVORK5CYII=", "w": 9, "h": 8}};
   const $ = (id) => document.getElementById(id);
+  const T = {
+    ko: {
+      doc_title: 'bbi PDF 병합기 · a_small_dot',
+      doc_desc: '설치 없이 브라우저에서 바로 쓰는 무료 PDF 병합기. 파일은 내 컴퓨터 밖으로 나가지 않아요.',
+      h1: 'PDF 병합기', tb_label: '파일 관리', queue_label: '대기 파일 목록', prev_label: '미리보기', seg_label: '미리보기 종류',
+      add: '파일 추가', up: '위로', down: '아래로', sort: '이름순', range: '페이지 범위', del: '선택 삭제', clear: '전체 비우기',
+      title_up: '선택한 파일을 위로', title_down: '선택한 파일을 아래로', title_sort: '이름순으로 정렬',
+      title_range: '병합할 페이지 범위 수정', title_del: '선택한 파일 삭제', title_clear: '목록 전체 비우기',
+      queue: '대기 파일', count: '({0}건)', queue_hint: 'PDF를 끌어다 놓아도 돼요', drop: '여기에 놓으면 추가돼요',
+      seg_one: '선택한 파일', seg_all: '전체 병합본', refresh: '새로고침', pstatus_idle: '파일을 클릭하면 내용이 보여요',
+      ph_b: '미리볼 파일이 없어요', ph_p1: '목록에서 파일을 클릭하면 이곳에 바로 보여요.',
+      ph_p2: '(휴대폰 브라우저는 미리보기가 안 보일 수 있어요. 병합·저장은 그대로 돼요.)',
+      safe1: '내 파일은 서버로 올라가지 않아요', safe2: '· 브라우저 안에서만 처리',
+      stat: '총 {0} · {1}', file1: '{0}개 파일', fileN: '{0}개 파일', pg1: '{0}페이지', pgN: '{0}페이지', merge: '병합하고 저장', merging: '합치는 중…',
+      err_pdf_only: 'PDF 파일만 추가할 수 있어요', err_enc: '암호가 걸려 있어 병합할 수 없어요', err_read: '읽을 수 없는 PDF예요',
+      err_load_head: '불러오지 못한 파일', err_more: '… 외 {0}건',
+      empty_b: '아직 파일이 없어요', empty_s: '위의 [파일 추가]를 누르거나\nPDF를 이 화면에 끌어다 놓아보세요.',
+      pages1: '{0}페이지', pagesN: '{0}페이지', range_chip: '범위 {0}', all: '전체',
+      act_range: '페이지 범위 수정', act_del: '삭제',
+      e_range: "잘못된 범위 표현식: '{0}'", e_over: '페이지 번호 초과: {0} (최대 {1}p)', e_invalid: "유효하지 않은 입력: '{0}'", e_none: '선택된 페이지가 없어요',
+      dlg_total: '총 {0} 페이지', dlg_ex: '예) 전체 · 1-3 · 1-3, 5, 8-10', cancel: '취소', ok: '확인',
+      clear_q: '목록의 PDF {0}개를 모두 지울까요?', clear_note: '원본 파일은 지워지지 않아요. 목록에서만 사라져요.', do_clear: '비우기',
+      pv_building: '병합본 만드는 중…', pv_all: '전체 병합본 · {0} · {1}p', pv_fail: '병합본을 만들지 못했어요: {0}',
+      done: '완료! {0} · {1}를 저장했어요', merge_fail: '병합 중 문제가 생겼어요\n{0}', engine_fail: 'PDF 엔진을 불러오지 못했어요. 파일이 손상됐을 수 있어요.',
+      fname: '병합문서_'
+    },
+    en: {
+      doc_title: 'bbi PDF Merger · a_small_dot',
+      doc_desc: 'A free PDF merger that works right in your browser. No install, no sign-up, and your files never leave your device.',
+      h1: 'PDF Merger', tb_label: 'File tools', queue_label: 'File queue', prev_label: 'Preview', seg_label: 'Preview type',
+      add: 'Add files', up: 'Up', down: 'Down', sort: 'By name', range: 'Page range', del: 'Delete', clear: 'Clear all',
+      title_up: 'Move the selected file up', title_down: 'Move the selected file down', title_sort: 'Sort by file name',
+      title_range: 'Edit which pages to merge', title_del: 'Delete the selected file', title_clear: 'Clear the whole list',
+      queue: 'Queue', count: '({0})', queue_hint: 'You can drag & drop PDFs here', drop: 'Drop here to add',
+      seg_one: 'Selected file', seg_all: 'Merged result', refresh: 'Refresh', pstatus_idle: 'Click a file to preview it',
+      ph_b: 'Nothing to preview', ph_p1: 'Click a file in the list to see it here.',
+      ph_p2: '(Phone browsers may not show the preview. Merging and saving still work.)',
+      safe1: 'Your files never leave your device', safe2: '· Processed in your browser only',
+      stat: '{0} · {1}', file1: '{0} file', fileN: '{0} files', pg1: '{0} page', pgN: '{0} pages', merge: 'Merge & save', merging: 'Merging…',
+      err_pdf_only: 'Only PDF files can be added', err_enc: 'Password-protected PDFs cannot be merged', err_read: "This PDF can't be read",
+      err_load_head: 'Could not load these files', err_more: '… and {0} more',
+      empty_b: 'No files yet', empty_s: 'Click [Add files] above, or\ndrag & drop PDFs onto this screen.',
+      pages1: '{0} page', pagesN: '{0} pages', range_chip: 'Range: {0}', all: 'All',
+      act_range: 'Edit page range', act_del: 'Delete',
+      e_range: "Invalid range: '{0}'", e_over: 'Page number out of range: {0} (max {1})', e_invalid: "Invalid input: '{0}'", e_none: 'No pages selected',
+      dlg_total: '{0} pages in total', dlg_ex: 'e.g. all · 1-3 · 1-3, 5, 8-10', cancel: 'Cancel', ok: 'OK',
+      clear_q: 'Remove all {0} PDFs from the list?', clear_note: "Your original files won't be deleted. They're only removed from this list.", do_clear: 'Clear',
+      pv_building: 'Building the merged PDF…', pv_all: 'Merged result · {0} · {1}p', pv_fail: 'Could not build the merged PDF: {0}',
+      done: 'Done! Saved {0} · {1}', merge_fail: 'Something went wrong while merging\n{0}', engine_fail: 'Could not load the PDF engine. The file may be damaged.',
+      fname: 'merged_'
+    }
+  };
+  /* ---------- 언어 (KR / EN) ---------- */
+  const LANG_KEY = 'bbi_lang';
+  function detectLang() {
+    try { const s = localStorage.getItem(LANG_KEY); if (s === 'ko' || s === 'en') return s; } catch (e) {}
+    const n = (navigator.language || 'ko').toLowerCase();
+    return n.indexOf('ko') === 0 ? 'ko' : 'en';
+  }
+  let lang = detectLang();
+  function t(key) {
+    let s = (T[lang] && T[lang][key] != null) ? T[lang][key] : T.ko[key];
+    if (s == null) return key;
+    for (let i = 1; i < arguments.length; i++) s = s.split('{' + (i - 1) + '}').join(arguments[i]);
+    return s;
+  }
+  function applyStatic() {
+    document.documentElement.lang = lang;
+    document.title = t('doc_title');
+    const md = document.querySelector('meta[name="description"]'); if (md) md.setAttribute('content', t('doc_desc'));
+    document.querySelectorAll('[data-i18n]').forEach((e) => { e.textContent = t(e.getAttribute('data-i18n')); });
+    document.querySelectorAll('[data-i18n-title]').forEach((e) => { const v = t(e.getAttribute('data-i18n-title')); e.title = v; e.setAttribute('aria-label', v); });
+    document.querySelectorAll('[data-i18n-label]').forEach((e) => e.setAttribute('aria-label', t(e.getAttribute('data-i18n-label'))));
+    document.querySelectorAll('[data-i18n-ph]').forEach((e) => e.setAttribute('placeholder', t(e.getAttribute('data-i18n-ph'))));
+    document.querySelectorAll('.lang button').forEach((b) => { const on = b.dataset.lang === lang; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+  }
+  function setLang(l) {
+    lang = l; try { localStorage.setItem(LANG_KEY, l); } catch (e) {}
+    applyStatic(); if (typeof onLangChange === 'function') onLangChange();
+  }
+  document.querySelectorAll('.lang button').forEach((b) => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+
 
   const listEl = $('list'), countEl = $('count'), statEl = $('stat');
   const btnMerge = $('btnMerge'), mergeLabel = $('mergeLabel');
@@ -307,6 +394,16 @@
   let previewUrl = null;
   let token = 0;       // 미리보기 중복 요청 방지
   let busy = false;
+  let lastTotal = null;
+  const nf = (n) => t(n === 1 ? 'file1' : 'fileN', n), np = (n) => t(n === 1 ? 'pg1' : 'pgN', n);
+  function rangeLabel(r) { const x = (r || '').trim(); return (x === '전체' || x.toLowerCase() === 'all') ? t('all') : r; }
+  function onLangChange() {
+    listEl.setAttribute('data-drop', t('drop'));
+    render();
+    if (!items.length) pstatus.textContent = t('pstatus_idle');
+    else if (mode === 'one') { const it = items[sel] || items[0]; pstatus.textContent = it.name + ' · ' + it.pages + 'p · ' + fmtBytes(it.size); }
+    else if (lastTotal != null) pstatus.textContent = t('pv_all', nf(items.length), lastTotal);
+  }
 
   /* ---------- 유틸 ---------- */
   function icon(name, scale) {
@@ -347,26 +444,26 @@
       if (!p) continue;
       if (p.includes('-')) {
         const m = p.match(/^(\d+)\s*-\s*(\d+)$/);
-        if (!m) throw new Error("잘못된 범위 표현식: '" + p + "'");
+        if (!m) throw new Error(t('e_range', p));
         let a = +m[1], b = +m[2];
         if (a > b) [a, b] = [b, a];
         for (let i = a; i <= b; i++) if (i >= 1 && i <= max) add(i);
       } else if (/^\d+$/.test(p)) {
         const n = +p;
-        if (n < 1 || n > max) throw new Error('페이지 번호 초과: ' + n + ' (최대 ' + max + 'p)');
+        if (n < 1 || n > max) throw new Error(t('e_over', n, max));
         add(n);
       } else {
-        throw new Error("유효하지 않은 입력: '" + p + "'");
+        throw new Error(t('e_invalid', p));
       }
     }
-    if (!out.length) throw new Error('선택된 페이지가 없어요');
+    if (!out.length) throw new Error(t('e_none'));
     return out;
   }
 
   /* ---------- 파일 추가 ---------- */
   async function addFiles(fileList) {
     const files = Array.from(fileList).filter(f => /\.pdf$/i.test(f.name) || f.type === 'application/pdf');
-    if (!files.length) { toast('PDF 파일만 추가할 수 있어요', 'err'); return; }
+    if (!files.length) { toast(t('err_pdf_only'), 'err'); return; }
     const errors = [];
     let added = 0;
     for (const f of files) {
@@ -380,12 +477,12 @@
         added++;
       } catch (e) {
         const enc = (e && (e.name === 'EncryptedPDFError' || /encrypt/i.test(e.message || '')));
-        errors.push(f.name + ': ' + (enc ? '암호가 걸려 있어 병합할 수 없어요' : '읽을 수 없는 PDF예요'));
+        errors.push(f.name + ': ' + (enc ? t('err_enc') : t('err_read')));
       }
     }
     if (added) sel = items.length - 1;
     if (errors.length) {
-      toast('불러오지 못한 파일\n' + errors.slice(0, 4).join('\n') + (errors.length > 4 ? '\n… 외 ' + (errors.length - 4) + '건' : ''), 'err');
+      toast(t('err_load_head') + '\n' + errors.slice(0, 4).join('\n') + (errors.length > 4 ? '\n' + t('err_more', errors.length - 4) : ''), 'err');
     }
     render(); refreshPreview();
   }
@@ -396,8 +493,8 @@
     if (!items.length) {
       const e = el('div', 'empty');
       const w = el('div', 'bob'); w.appendChild(icon('file', 6)); e.appendChild(w);
-      const b = el('b', '', '아직 파일이 없어요'); b.appendChild(el('span', 'blink')); e.appendChild(b);
-      e.appendChild(el('div', 'small', '위의 [파일 추가]를 누르거나\nPDF를 이 화면에 끌어다 놓아보세요.'));
+      const b = el('b', '', t('empty_b')); b.appendChild(el('span', 'blink')); e.appendChild(b);
+      e.appendChild(el('div', 'small', t('empty_s')));
       e.lastChild.style.whiteSpace = 'pre-line';
       listEl.appendChild(e);
       sel = -1;
@@ -416,8 +513,8 @@
       const info = el('div', 'info');
       const nm = el('div', 'name', it.name); nm.title = it.name;
       const chips = el('div', 'chips');
-      chips.appendChild(el('span', 'chip', it.pages + '페이지'));
-      chips.appendChild(el('span', 'chip range', '범위 ' + it.range));
+      chips.appendChild(el('span', 'chip', t(it.pages === 1 ? 'pages1' : 'pagesN', it.pages)));
+      chips.appendChild(el('span', 'chip range', t('range_chip', rangeLabel(it.range))));
       chips.appendChild(el('span', 'chip', fmtBytes(it.size)));
       info.appendChild(nm); info.appendChild(chips);
       left.appendChild(info);
@@ -429,10 +526,10 @@
         b.type = 'button'; b.title = label; b.setAttribute('aria-label', label);
         b.appendChild(icon(ic, 2)); b.addEventListener('click', fn); return b;
       };
-      acts.appendChild(mk('up', '위로', () => move(i, -1)));
-      acts.appendChild(mk('down', '아래로', () => move(i, 1)));
-      acts.appendChild(mk('pencil', '페이지 범위 수정', () => editRange(i)));
-      acts.appendChild(mk('trash', '삭제', () => remove(i), true));
+      acts.appendChild(mk('up', t('up'), () => move(i, -1)));
+      acts.appendChild(mk('down', t('down'), () => move(i, 1)));
+      acts.appendChild(mk('pencil', t('act_range'), () => editRange(i)));
+      acts.appendChild(mk('trash', t('act_del'), () => remove(i), true));
 
       c.appendChild(left); c.appendChild(acts);
       listEl.appendChild(c);
@@ -441,8 +538,9 @@
     const total = items.reduce((a, b) => {
       try { return a + parseRange(b.range, b.pages).length; } catch (e) { return a + b.pages; }
     }, 0);
-    countEl.textContent = '(' + items.length + '건)';
-    statEl.textContent = '총 ' + items.length + '개 파일 · ' + total + ' 페이지';
+    countEl.textContent = t('count', items.length);
+    statEl.textContent = t('stat', nf(items.length), np(total));
+    mergeLabel.textContent = busy ? t('merging') : t('merge');
     btnMerge.disabled = busy || !items.length;
     const has = items.length > 0, one = sel >= 0;
     $('btnUp').disabled = !(one && sel > 0);
@@ -484,18 +582,18 @@
 
   function editRange(i) {
     const it = items[i]; if (!it) return;
-    dialog('페이지 범위', (body, foot, close) => {
+    dialog(t('range'), (body, foot, close) => {
       body.appendChild(el('div', 'fname', it.name));
-      body.appendChild(el('div', 'meta', '총 ' + it.pages + ' 페이지'));
-      const inp = el('input', 'field'); inp.type = 'text'; inp.value = it.range; inp.setAttribute('aria-label', '페이지 범위');
+      body.appendChild(el('div', 'meta', t('dlg_total', it.pages)));
+      const inp = el('input', 'field'); inp.type = 'text'; inp.value = rangeLabel(it.range); inp.setAttribute('aria-label', t('range'));
       const err = el('div', 'errmsg'); err.setAttribute('role', 'alert');
       body.appendChild(inp); body.appendChild(err);
-      body.appendChild(el('div', 'examples', '예) 전체 · 1-3 · 1-3, 5, 8-10'));
-      const cancel = el('button', 'btn', '취소'); cancel.type = 'button';
-      const ok = el('button', 'btn primary', '확인'); ok.type = 'button';
+      body.appendChild(el('div', 'examples', t('dlg_ex')));
+      const cancel = el('button', 'btn', t('cancel')); cancel.type = 'button';
+      const ok = el('button', 'btn primary', t('ok')); ok.type = 'button';
       foot.appendChild(cancel); foot.appendChild(ok);
       const submit = () => {
-        const v = inp.value.trim() || '전체';
+        const v = inp.value.trim() || '전체';   // 내부 값은 '전체'로 통일
         try { parseRange(v, it.pages); } catch (e) { inp.classList.add('bad'); err.textContent = e.message; inp.focus(); return; }
         close(v);
       };
@@ -510,11 +608,11 @@
   }
 
   function confirmClear() {
-    return dialog('전체 비우기', (body, foot, close) => {
-      body.appendChild(el('div', 'fname', '목록의 PDF ' + items.length + '개를 모두 지울까요?'));
-      body.appendChild(el('div', 'meta', '원본 파일은 지워지지 않아요. 목록에서만 사라져요.'));
-      const cancel = el('button', 'btn', '취소'); cancel.type = 'button';
-      const ok = el('button', 'btn danger', '비우기'); ok.type = 'button';
+    return dialog(t('clear'), (body, foot, close) => {
+      body.appendChild(el('div', 'fname', t('clear_q', items.length)));
+      body.appendChild(el('div', 'meta', t('clear_note')));
+      const cancel = el('button', 'btn', t('cancel')); cancel.type = 'button';
+      const ok = el('button', 'btn danger', t('do_clear')); ok.type = 'button';
       foot.appendChild(cancel); foot.appendChild(ok);
       cancel.onclick = () => close(false); ok.onclick = () => close(true);
       setTimeout(() => cancel.focus(), 0);
@@ -545,23 +643,24 @@
   }
   async function refreshPreview() {
     const my = ++token;
-    if (!items.length) { clearViewer(); pstatus.textContent = '파일을 클릭하면 내용이 보여요'; return; }
+    if (!items.length) { clearViewer(); pstatus.textContent = t('pstatus_idle'); return; }
     if (mode === 'one') {
       const it = items[sel] || items[0];
       showViewer(URL.createObjectURL(it.file));
       pstatus.textContent = it.name + ' · ' + it.pages + 'p · ' + fmtBytes(it.size);
       return;
     }
-    pstatus.textContent = '병합본 만드는 중…';
+    pstatus.textContent = t('pv_building');
     try {
       const { bytes, total } = await buildMerged();
       if (my !== token) return;
       showViewer(URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' })));
-      pstatus.textContent = '전체 병합본 · ' + items.length + '개 파일 · ' + total + 'p';
+      lastTotal = total;
+      pstatus.textContent = t('pv_all', nf(items.length), total);
     } catch (e) {
       if (my !== token) return;
       console.error(e);
-      pstatus.textContent = '병합본을 만들지 못했어요: ' + e.message;
+      pstatus.textContent = t('pv_fail', e.message);
     }
   }
 
@@ -610,27 +709,29 @@
   // 병합 + 저장
   btnMerge.addEventListener('click', async () => {
     if (!items.length || busy) return;
-    busy = true; btnMerge.disabled = true; mergeLabel.textContent = '합치는 중…';
+    busy = true; btnMerge.disabled = true; mergeLabel.textContent = t('merging');
     try {
       const { bytes, total } = await buildMerged();
       const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
       const d = new Date(), pad = (n) => String(n).padStart(2, '0');
       const a = document.createElement('a');
-      a.href = url; a.download = '병합문서_' + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '.pdf';
+      a.href = url; a.download = t('fname') + d.getFullYear() + pad(d.getMonth() + 1) + pad(d.getDate()) + '.pdf';
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 4000);
-      toast('완료! ' + items.length + '개 파일 · ' + total + '페이지를 저장했어요', 'ok');
+      toast(t('done', nf(items.length), np(total)), 'ok');
     } catch (e) {
       console.error(e);
-      toast('병합 중 문제가 생겼어요\n' + e.message, 'err');
+      toast(t('merge_fail', e.message), 'err');
     } finally {
-      busy = false; mergeLabel.textContent = '병합하고 저장'; render();
+      busy = false; render();
     }
   });
 
   if (typeof PDFLib === 'undefined') {
-    toast('PDF 엔진을 불러오지 못했어요. 파일이 손상됐을 수 있어요.', 'err');
+    toast(t('engine_fail'), 'err');
   }
+  applyStatic();
+  listEl.setAttribute('data-drop', t('drop'));
   render();
 })();
 </script>
