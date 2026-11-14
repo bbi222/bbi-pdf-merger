@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>bbi PDF 병합기 · a_small_dot</title>
 <meta name="description" content="설치 없이 브라우저에서 바로 쓰는 무료 PDF 병합기. 파일은 내 컴퓨터 밖으로 나가지 않아요.">
-<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAiklEQVR42mNgGAUjHTDiktDWNv5PjoFXr55lJEU906APgSuXjhJlkI6eNVkhMeAhwEJtA1cvm8zAwMDAEBqV+5+YkBh+IRAalYs1LeEKieETArhyC3ruGLohUH96D0kGN5q6MAyvcoBYH5EKRtPAaBoYPmkAFkJf184bpiEwctMAodpsyIfAKBgFAM4hKJlCSpFqAAAAAElFTkSuQmCC">
+<link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAiElEQVR42u2WwQ3AIAwDDeoCMA0rZSJWYhoYgb76QUIEVKkNxN8gPw47CqA6XaY3cM7VFcNSipl5b39PIOfMMvLeL5H4nMD1tmFKCQAQQqgcEvtmgNuOfTLQIzUiI4dAjHHKmIgO24SjdshvgWZAM9DLwPPX7cbjkpNDgJvqWdntrmJx94BKdQPjODs/nk3roQAAAABJRU5ErkJggg==">
 
 <!-- PDF 엔진: pdf-lib (MIT License, https://github.com/Hopding/pdf-lib) — 파일 안에 내장되어 인터넷 없이 동작 -->
 <script>
@@ -30,22 +30,23 @@
 
 <style>
   :root {
-    --bg: #F4F0E6;
-    --ink: #2B2B33;
-    --mint: #7EC8B4;
-    --mint-d: #4A9682;
-    --mint-l: #DDF0E9;
-    --peach: #F4AA96;
-    --peach-l: #FBE3DB;
-    --gray: #D6D1C6;
-    --paper: #FFFDF8;
+    --bg: #FFFFFF;
+    --ink: #111111;
+    --mint: #E8E8E8;      /* (이름만 유지) 패널 머리줄 등 연한 면 */
+    --mint-d: #111111;
+    --mint-l: #F0F0F0;    /* 호버·선택 면 */
+    --peach: #111111;     /* 작은 점 */
+    --peach-l: #ECECEC;
+    --gray: #D9D9D9;
+    --paper: #FFFFFF;
+    --sub: #666666;
     --px: 3px;                         /* 픽셀 테두리 두께 */
     --shadow: 4px 4px 0 var(--ink);    /* 픽셀 그림자 */
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; }
   body {
-    background: var(--bg) url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAXklEQVR42u3XIQ6AMBAEwJbwDuD/ryoV1QgegKeqBXFiVp6aZMVl8321FClLChYgoK9Z+1M9y+uy7YfKgIBmk/0yICAgICAgICCg0V32V+b2ncqA7DKVAQEBAQEFywOaIQ7AKtwVIwAAAABJRU5ErkJggg==") repeat;
+    background: var(--bg) url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAWUlEQVR42u3XoQ3AMAwEwKTqFt5/NM/h8hYlKTC4h0YnPbB+VtXolGs0CxDQae7vKTNfl4hQGRDQbqZfBgQEBAQEBAQEtLrL/srevlMZkF2mMiAgICCgZnkAcDoPWRie/dkAAAAASUVORK5CYII=") repeat;
     color: var(--ink);
     font-family: "Galmuri11", "Galmuri9", "DungGeunMo", "NeoDunggeunmo", "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
     font-size: 15px;
@@ -65,7 +66,7 @@
   }
   .brand { display: flex; align-items: center; gap: 12px; }
   .brand h1 { font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.1; }
-  .brand .sub { font-size: .78rem; color: var(--mint-d); font-weight: 700; margin-top: 3px; }
+  .brand .sub { font-size: .78rem; color: var(--sub); font-weight: 700; margin-top: 3px; }
   .brand .sub i { font-style: normal; color: var(--peach); }
 
   .tools { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
@@ -86,10 +87,13 @@
   .btn:focus-visible, .card:focus-visible, .seg button:focus-visible, .field:focus-visible {
     outline: 3px dashed var(--mint-d); outline-offset: 3px;
   }
-  .btn:disabled { background: var(--gray); color: #8b877d; cursor: not-allowed; box-shadow: 3px 3px 0 #a9a498; border-color: #a9a498; }
+  .btn:disabled { background: var(--gray); color: #8a8a8a; cursor: not-allowed; box-shadow: 3px 3px 0 #ababab; border-color: #ababab; }
   .btn:disabled .px { opacity: .45; }
-  .btn.primary { background: var(--mint); }
-  .btn.primary:hover:not(:disabled) { background: #96d6c4; }
+  .btn.primary { background: var(--ink); color: #fff; }
+  .btn.primary img.px { filter: invert(1); }
+  .btn.primary:hover:not(:disabled) { background: #333; }
+  .btn.primary:disabled img.px { filter: none; }
+  .btn.primary:disabled { background: var(--gray); color: #8a8a8a; }
   .btn.danger:hover:not(:disabled) { background: var(--peach-l); }
   .btn.small { padding: 3px 7px; font-size: .78rem; box-shadow: 2px 2px 0 var(--ink); border-width: 2px; }
   .btn.small:active:not(:disabled) { transform: translate(2px, 2px); }
@@ -119,7 +123,7 @@
   .list.drag::after {
     content: "여기에 놓으면 추가돼요"; position: absolute; inset: 8px; z-index: 5;
     display: flex; align-items: center; justify-content: center;
-    background: rgba(221,240,233,.94); border: var(--px) dashed var(--mint-d);
+    background: rgba(240,240,240,.94); border: var(--px) dashed var(--mint-d);
     font-weight: 800; font-size: 1.05rem;
   }
 
@@ -129,7 +133,7 @@
     background: var(--paper); border: var(--px) solid var(--ink); padding: 9px 10px; cursor: pointer;
     box-shadow: 3px 3px 0 var(--gray);
   }
-  .card:hover { box-shadow: 3px 3px 0 var(--mint); }
+  .card:hover { box-shadow: 3px 3px 0 #8c8c8c; }
   .card.sel { background: var(--mint-l); box-shadow: 3px 3px 0 var(--ink); }
   .card .no {
     background: var(--ink); color: var(--bg); font-weight: 800; font-size: .8rem;
@@ -143,7 +147,7 @@
   .acts { display: flex; gap: 5px; flex-shrink: 0; }
 
   .empty {
-    margin: auto; text-align: center; padding: 26px 14px; color: #6b685f;
+    margin: auto; text-align: center; padding: 26px 14px; color: var(--sub);
     display: flex; flex-direction: column; align-items: center; gap: 10px;
   }
   .empty b { color: var(--ink); font-size: 1rem; }
@@ -165,9 +169,9 @@
   .pholder {
     position: absolute; inset: 0; background: var(--paper);
     display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 20px;
-    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAXklEQVR42u3XIQ6AMBAEwJbwDuD/ryoV1QgegKeqBXFiVp6aZMVl8321FClLChYgoK9Z+1M9y+uy7YfKgIBmk/0yICAgICAgICCg0V32V+b2ncqA7DKVAQEBAQEFywOaIQ7AKtwVIwAAAABJRU5ErkJggg==");
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAIAAADYYG7QAAAAWUlEQVR42u3XoQ3AMAwEwKTqFt5/NM/h8hYlKTC4h0YnPbB+VtXolGs0CxDQae7vKTNfl4hQGRDQbqZfBgQEBAQEBAQEtLrL/srevlMZkF2mMiAgICCgZnkAcDoPWRie/dkAAAAASUVORK5CYII=");
   }
-  .pholder p { font-size: .82rem; color: #6b685f; max-width: 300px; }
+  .pholder p { font-size: .82rem; color: var(--sub); max-width: 300px; }
   .pholder b { font-size: .98rem; }
 
   /* ---------- 하단 ---------- */
@@ -176,27 +180,28 @@
     padding: 12px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 18px;
   }
   .safe { display: flex; align-items: center; gap: 8px; font-size: .8rem; font-weight: 700; }
-  .safe small { font-weight: 600; color: #6b685f; }
+  .safe small { font-weight: 600; color: var(--sub); }
   .stat { background: var(--bg); border: var(--px) solid var(--ink); padding: 4px 14px; font-weight: 800; font-size: .88rem; }
 
   /* ---------- 토스트 / 모달 ---------- */
   #toasts { position: fixed; left: 50%; bottom: 84px; transform: translateX(-50%); z-index: 50; display: flex; flex-direction: column; gap: 8px; align-items: center; width: min(92vw, 520px); pointer-events: none; }
   .toast { background: var(--paper); border: var(--px) solid var(--ink); box-shadow: var(--shadow); padding: 9px 14px; font-weight: 700; font-size: .86rem; display: flex; gap: 9px; align-items: flex-start; pointer-events: auto; }
-  .toast.ok { background: var(--mint-l); }
-  .toast.err { background: var(--peach-l); }
+  .toast.ok { background: var(--paper); }
+  .toast.err { background: var(--ink); color: #fff; }
+  .toast.err img.px { filter: invert(1); }
   .toast span { white-space: pre-line; }
 
-  .overlay { position: fixed; inset: 0; background: rgba(43,43,51,.5); z-index: 60; display: flex; align-items: center; justify-content: center; padding: 16px; }
+  .overlay { position: fixed; inset: 0; background: rgba(17,17,17,.5); z-index: 60; display: flex; align-items: center; justify-content: center; padding: 16px; }
   .dialog { background: var(--paper); border: var(--px) solid var(--ink); box-shadow: 6px 6px 0 var(--ink); width: min(100%, 440px); }
   .dialog header { background: var(--mint); border-bottom: var(--px) solid var(--ink); padding: 8px 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
   .dialog .body { padding: 16px 16px 6px; display: flex; flex-direction: column; gap: 8px; }
   .dialog .fname { font-weight: 800; word-break: break-all; }
-  .dialog .meta { font-size: .82rem; color: #6b685f; }
+  .dialog .meta { font-size: .82rem; color: var(--sub); }
   .field { width: 100%; border: var(--px) solid var(--ink); padding: 8px 10px; font: inherit; font-weight: 700; background: #fff; }
-  .field.bad { border-color: #c0432a; background: var(--peach-l); }
-  .errmsg { color: #b23a22; font-size: .8rem; font-weight: 700; min-height: 1.2em; }
+  .field.bad { border-style: dashed; background: var(--peach-l); }
+  .errmsg { color: var(--ink); font-size: .8rem; font-weight: 700; min-height: 1.2em; }
   .dialog footer { padding: 10px 16px 16px; display: flex; justify-content: flex-end; gap: 10px; }
-  .examples { font-size: .78rem; color: #6b685f; }
+  .examples { font-size: .78rem; color: var(--sub); }
 
   /* ---------- 좁은 화면 ---------- */
   @media (max-width: 880px) {
@@ -222,7 +227,7 @@
 
 <header class="top">
   <div class="brand">
-    <img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAa0lEQVR42mPU1jb+z4ADXL16lhHO0dY2/v//7w8MrK1t/B/ZECYGPGD1sskMMMV4FYZG5cJtZcGl6Mqlo3C2jp41A1xh/ek9WDU0mrowMDAwIBTCBHABOprYaOrC8HXtPEyFhExkxBeFyAAAVVs1QM4DUQMAAAAASUVORK5CYII=" width="40" height="48" alt="" aria-hidden="true" >
+    <img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAYUlEQVR42r2RwQ3AMAgDQ9UFzJZMlJUyDRmBvkJom9Bf/QLJtnRAAKxs1HsnXwDYSgAslhwlUWutDDMBMFV9mZj5tp+7thhm5mmstS4DIpLDPMF+ahQRp3aor4OPmbIXRl1bWJS+YQGYogAAAABJRU5ErkJggg==" width="40" height="48" alt="" aria-hidden="true" >
     <div>
       <h1>PDF 병합기</h1>
       <div class="sub">bbi · a_small_dot <i>■</i></div>
@@ -230,22 +235,22 @@
   </div>
 
   <div class="tools" role="toolbar" aria-label="파일 관리">
-    <button class="btn primary" id="btnAdd"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAKUlEQVR42mNkgAJtbeP/MPbVq2cZGRgYGJgY8ABGZB3oAK9O/MaS7SAAY3sJlNK+DT0AAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t">파일 추가</span></button>
+    <button class="btn primary" id="btnAdd"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAKUlEQVR42mNkgAJBQcH/MPb79+8ZGRgYGJgY8ABGZB3oAK9O/MaS7SAAK2kJPpMh5wcAAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t">파일 추가</span></button>
     <span class="sep"></span>
-    <button class="btn" id="btnUp" title="선택한 파일을 위로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAMElEQVR42mNgQAPa2sb/0cWYsClAV8iEywRkPhMuK5DFGXHpvnr1LCNWN+ECRCkCAMysDsRtggxeAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">위로</span></button>
-    <button class="btn" id="btnDown" title="선택한 파일을 아래로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANklEQVR42mNkQALa2sb/YeyrV88ywthMDEQAohQxoluDDq5ePcvIhG4/ugIU69AV4tLIgMtqAKfME3OhL1WQAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">아래로</span></button>
-    <button class="btn" id="btnSort" title="이름순으로 정렬"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAHElEQVR42mPU1jb+z0AOYMSm8+rVs4yk6UTXAQBHpgmMDummCAAAAABJRU5ErkJggg==" width="14" height="10" alt="" aria-hidden="true" ><span class="t">이름순</span></button>
-    <button class="btn" id="btnRange" title="병합할 페이지 범위 수정"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAR0lEQVR42mNgwAG0tY3/a2sb/2dgYGBgwaXgZH0yAwMDA4N5I8N/rAq+rJr2/8uqaXCTaKDg/98fOBUwwhTBBK5ePcuIrggAZ/MymBwdI48AAAAASUVORK5CYII=" width="18" height="14" alt="" aria-hidden="true" ><span class="t">페이지 범위</span></button>
+    <button class="btn" id="btnUp" title="선택한 파일을 위로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAMElEQVR42mNgQAOCgoL/0cWYsClAV8iEywRkPhMuK5DFGXHpfv/+PSNWN+ECRCkCACc7DGpXaJeUAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">위로</span></button>
+    <button class="btn" id="btnDown" title="선택한 파일을 아래로"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANklEQVR42mNkQAKCgoL/Yez3798zwthMDEQAohQxoluDDt6/f8/IhG4/ugIU69AV4tLIgMtqAPf+FHUGJYobAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">아래로</span></button>
+    <button class="btn" id="btnSort" title="이름순으로 정렬"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAHElEQVR42mMUFBT8z0AOYMSm8/3794yk6UTXAQAM5Ak2Bq5YBQAAAABJRU5ErkJggg==" width="14" height="10" alt="" aria-hidden="true" ><span class="t">이름순</span></button>
+    <button class="btn" id="btnRange" title="병합할 페이지 범위 수정"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANElEQVR42r3KsQ0AMAwCQTwC+0/GFIxAKjdWnDJfvg5YIhmSwQtIiqQ7/ASSrKAa9bBdEx0f7jYwTpLV+QAAAABJRU5ErkJggg==" width="18" height="14" alt="" aria-hidden="true" ><span class="t">페이지 범위</span></button>
     <span class="sep"></span>
-    <button class="btn danger" id="btnDel" title="선택한 파일 삭제"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOklEQVR42mNkgAJtbeP/DGjg6tWzjAwMDAyM2CSxAm1t4/////74j41mYGBgYCLGEOopYsTlM2QfAgDmXxuLmOC5CwAAAABJRU5ErkJggg==" width="18" height="14" alt="" aria-hidden="true" ><span class="t">선택 삭제</span></button>
-    <button class="btn danger" id="btnClear" title="목록 전체 비우기"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVR42mNgQALa2sb/kflMDHgAE7ouZN2M6EYhA0Zs9l29epYRQyVJDgIAs1QLsdMGdagAAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t">전체 비우기</span></button>
+    <button class="btn danger" id="btnDel" title="선택한 파일 삭제"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42q2PsQkAIBADL26Q/Yf8EWJjIfKChdekSAicWNgOB1UlAHVli+0kSZcA4+Xk30g3s91wAr2QGfiWFxinAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ><span class="t">선택 삭제</span></button>
+    <button class="btn danger" id="btnClear" title="목록 전체 비우기"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVR42mNgQAKCgoL/kflMDHgAE7ouZN2M6EYhA0Zs9r1//54RQyVJDgIA4s8KA6b3thwAAAAASUVORK5CYII=" width="14" height="14" alt="" aria-hidden="true" ><span class="t">전체 비우기</span></button>
   </div>
 </header>
 
 <main class="work">
   <section class="panel queue" aria-label="대기 파일 목록">
     <header>
-      <span><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAPElEQVR42mPU1jb+z4AErl49y8iABlgYGBgYguc2IkSS6/9jVYQMUDQwMDCsTa5nYGIgAlBPESO677ABAKm0C+tjJc53AAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ></span>
+      <span><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mMUFBT8z4AE3r9/z8iABlgYGBgYWltb4QLV1dX/sSpCBsgaoJoYmBiIANRTxIjuO2wAACZ6DELfu8qKAAAAAElFTkSuQmCC" width="18" height="14" alt="" aria-hidden="true" ></span>
       <span style="flex:1">대기 파일 <span id="count">(0건)</span></span>
       <span class="hint">PDF를 끌어다 놓아도 돼요</span>
     </header>
@@ -259,11 +264,11 @@
         <button id="segAll" type="button">전체 병합본</button>
       </div>
       <span class="pstatus" id="pstatus" aria-live="polite">파일을 클릭하면 내용이 보여요</span>
-      <button class="btn small" id="btnRefresh" type="button"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAM0lEQVR42mNkYGBg0NY2/s+ABq5ePcvIAJNEV4Aihk03siImXJLYOVgUMWFThMxnJOQLAMVPGmcAaX1nAAAAAElFTkSuQmCC" width="16" height="14" alt="" aria-hidden="true" ><span>새로고침</span></button>
+      <button class="btn small" id="btnRefresh" type="button"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAM0lEQVR42mNkYGBgEBQU/M+ABt6/f8/IAJNEV4Aihk03siImXJLYOVgUMWFThMxnJOQLAK0TFl/rtYEqAAAAAElFTkSuQmCC" width="16" height="14" alt="" aria-hidden="true" ><span>새로고침</span></button>
     </header>
     <div class="pbody">
       <div class="pholder" id="pholder">
-        <div class="bob"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAUElEQVR42mNkgAJtbeP/DEjg6tWzjAzoAF0RVjFkgboTW/7XndjyH5scEwORgAWZ02Thw4hXNTFuZMSnGNn3jMTYcvXqWUZGYp2E19fIgQ4Ab2kgNgzpDgkAAAAASUVORK5CYII=" width="60" height="60" alt="" aria-hidden="true" ></div>
+        <div class="bob"><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVR42o2QwQ0AIAgDqRuwfNfsCPjRhBhU7lkaSoEt3D0sIQl2cppKLQskg2RUs2FdqthW/E3Db/Nuj06sJKB7/7N1fvoEudkfG6aulRUAAAAASUVORK5CYII=" width="60" height="60" alt="" aria-hidden="true" ></div>
         <b>미리볼 파일이 없어요</b>
         <p>목록에서 파일을 클릭하면 이곳에 바로 보여요.<br>(휴대폰 브라우저는 미리보기가 안 보일 수 있어요. 병합·저장은 그대로 돼요.)</p>
       </div>
@@ -274,11 +279,11 @@
 
 <footer class="foot">
   <div class="safe">
-    <img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAQklEQVR42mNkgAJtbeP/DGjg6tWzjAzICtAVYYhhMwVZnBGXAmTAwsDAwBA8txEusDa5HoPPxEAEwFCEbAoMEOUmAA4xF71ynvhAAAAAAElFTkSuQmCC" width="18" height="16" alt="" aria-hidden="true" >
+    <img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAQklEQVR42mNkgAJBQcH/DGjg/fv3jAzICtAVYYhhMwVZnBGXAmTAwsDAwNDa2goXqK6uxuAzMRABMBQhmwIDRLkJAPr2FSt2Nab0AAAAAElFTkSuQmCC" width="18" height="16" alt="" aria-hidden="true" >
     <div>내 파일은 서버로 올라가지 않아요 <small>· 브라우저 안에서만 처리</small></div>
   </div>
   <div class="stat" id="stat" aria-live="polite">총 0개 파일 · 0 페이지</div>
-  <button class="btn primary big" id="btnMerge" disabled><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mNkQALa2sb/YeyrV88ywthMDEQARnQT0MHVq2cZmdCNRleAYh26QlwaGXBZzYjPPTAAABT/FPqNCGCQAAAAAElFTkSuQmCC" width="27" height="21" alt="" aria-hidden="true" ><span id="mergeLabel">병합하고 저장</span></button>
+  <button class="btn primary big" id="btnMerge" disabled><img class="px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mNkQAKCgoL/Yez3798zwthMDEQARnQT0MH79+8ZmdCNRleAYh26QlwaGXBZzYjPPTAAAH7BFaZwrSDIAAAAAElFTkSuQmCC" width="27" height="21" alt="" aria-hidden="true" ><span id="mergeLabel">병합하고 저장</span></button>
 </footer>
 
 <div id="toasts" role="status" aria-live="polite"></div>
@@ -287,7 +292,7 @@
 <script>
 (function () {
   'use strict';
-  const ICONS = {"file": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAa0lEQVR42mPU1jb+z4ADXL16lhHO0dY2/v//7w8MrK1t/B/ZECYGPGD1sskMMMV4FYZG5cJtZcGl6Mqlo3C2jp41A1xh/ek9WDU0mrowMDAwIBTCBHABOprYaOrC8HXtPEyFhExkxBeFyAAAVVs1QM4DUQMAAAAASUVORK5CYII=", "w": 10, "h": 12}, "plus": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAKUlEQVR42mNkgAJtbeP/MPbVq2cZGRgYGJgY8ABGZB3oAK9O/MaS7SAAY3sJlNK+DT0AAAAASUVORK5CYII=", "w": 7, "h": 7}, "up": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAMElEQVR42mNgQAPa2sb/0cWYsClAV8iEywRkPhMuK5DFGXHpvnr1LCNWN+ECRCkCAMysDsRtggxeAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "down": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANklEQVR42mNkQALa2sb/YeyrV88ywthMDEQAohQxoluDDq5ePcvIhG4/ugIU69AV4tLIgMtqAKfME3OhL1WQAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "pencil": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAR0lEQVR42mNgwAG0tY3/a2sb/2dgYGBgwaXgZH0yAwMDA4N5I8N/rAq+rJr2/8uqaXCTaKDg/98fOBUwwhTBBK5ePcuIrggAZ/MymBwdI48AAAAASUVORK5CYII=", "w": 9, "h": 7}, "trash": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOklEQVR42mNkgAJtbeP/DGjg6tWzjAwMDAyM2CSxAm1t4/////74j41mYGBgYCLGEOopYsTlM2QfAgDmXxuLmOC5CwAAAABJRU5ErkJggg==", "w": 9, "h": 7}, "sort": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAHElEQVR42mPU1jb+z0AOYMSm8+rVs4yk6UTXAQBHpgmMDummCAAAAABJRU5ErkJggg==", "w": 7, "h": 5}, "sparkle": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVR42mNgQALa2sb/kflMDHgAE7ouZN2M6EYhA0Zs9l29epYRQyVJDgIAs1QLsdMGdagAAAAASUVORK5CYII=", "w": 7, "h": 7}, "dl": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mNkQALa2sb/YeyrV88ywthMDEQARnQT0MHVq2cZmdCNRleAYh26QlwaGXBZzYjPPTAAABT/FPqNCGCQAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "refresh": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAM0lEQVR42mNkYGBg0NY2/s+ABq5ePcvIAJNEV4Aihk03siImXJLYOVgUMWFThMxnJOQLAMVPGmcAaX1nAAAAAElFTkSuQmCC", "w": 8, "h": 7}, "lock": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAQklEQVR42mNkgAJtbeP/DGjg6tWzjAzICtAVYYhhMwVZnBGXAmTAwsDAwBA8txEusDa5HoPPxEAEwFCEbAoMEOUmAA4xF71ynvhAAAAAAElFTkSuQmCC", "w": 9, "h": 8}, "folder": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAPElEQVR42mPU1jb+z4AErl49y8iABlgYGBgYguc2IkSS6/9jVYQMUDQwMDCsTa5nYGIgAlBPESO677ABAKm0C+tjJc53AAAAAElFTkSuQmCC", "w": 9, "h": 7}, "eye": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAUElEQVR42mNkgAJtbeP/DEjg6tWzjAzoAF0RVjFkgboTW/7XndjyH5scEwORgAWZ02Thw4hXNTFuZMSnGNn3jMTYcvXqWUZGYp2E19fIgQ4Ab2kgNgzpDgkAAAAASUVORK5CYII=", "w": 10, "h": 10}, "cloud": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAFCAYAAABxeg0vAAAAPklEQVR42mNkQAPa2sb/YeyrV88yosszoiu8cukoXFJHzxq7Rm1t4/////7AibW1jf/DbSakGF0jI7KbiQEAJ+FXVz912WAAAAAASUVORK5CYII=", "w": 12, "h": 5}, "warn": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAPklEQVR42mNgQAPa2sb/GfABbW3j/19WTfuPrpCJgQjAhMsaZD5RJjEScuzVq2cZMUw6WZ+MaRJBLzMwMAAAeAASGUS5BDcAAAAASUVORK5CYII=", "w": 9, "h": 8}};
+  const ICONS = {"file": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAMCAYAAABbayygAAAAYUlEQVR42r2RwQ3AMAgDQ9UFzJZMlJUyDRmBvkJom9Bf/QLJtnRAAKxs1HsnXwDYSgAslhwlUWutDDMBMFV9mZj5tp+7thhm5mmstS4DIpLDPMF+ahQRp3aor4OPmbIXRl1bWJS+YQGYogAAAABJRU5ErkJggg==", "w": 10, "h": 12}, "plus": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAAKUlEQVR42mNkgAJBQcH/MPb79+8ZGRgYGJgY8ABGZB3oAK9O/MaS7SAAK2kJPpMh5wcAAAAASUVORK5CYII=", "w": 7, "h": 7}, "up": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAMElEQVR42mNgQAOCgoL/0cWYsClAV8iEywRkPhMuK5DFGXHpfv/+PSNWN+ECRCkCACc7DGpXaJeUAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "down": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANklEQVR42mNkQAKCgoL/Yez3798zwthMDEQAohQxoluDDt6/f8/IhG4/ugIU69AV4tLIgMtqAPf+FHUGJYobAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "pencil": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAANElEQVR42r3KsQ0AMAwCQTwC+0/GFIxAKjdWnDJfvg5YIhmSwQtIiqQ7/ASSrKAa9bBdEx0f7jYwTpLV+QAAAABJRU5ErkJggg==", "w": 9, "h": 7}, "trash": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42q2PsQkAIBADL26Q/Yf8EWJjIfKChdekSAicWNgOB1UlAHVli+0kSZcA4+Xk30g3s91wAr2QGfiWFxinAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "sort": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAFCAYAAACJmvbYAAAAHElEQVR42mMUFBT8z0AOYMSm8/3794yk6UTXAQAM5Ak2Bq5YBQAAAABJRU5ErkJggg==", "w": 7, "h": 5}, "sparkle": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAcAAAAHCAYAAADEUlfTAAAALElEQVR42mNgQAKCgoL/kflMDHgAE7ouZN2M6EYhA0Zs9r1//54RQyVJDgIA4s8KA6b3thwAAAAASUVORK5CYII=", "w": 7, "h": 7}, "dl": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mNkQAKCgoL/Yez3798zwthMDEQARnQT0MH79+8ZmdCNRleAYh26QlwaGXBZzYjPPTAAAH7BFaZwrSDIAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "refresh": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAHCAYAAAA1WQxeAAAAM0lEQVR42mNkYGBgEBQU/M+ABt6/f8/IAJNEV4Aihk03siImXJLYOVgUMWFThMxnJOQLAK0TFl/rtYEqAAAAAElFTkSuQmCC", "w": 8, "h": 7}, "lock": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAQklEQVR42mNkgAJBQcH/DGjg/fv3jAzICtAVYYhhMwVZnBGXAmTAwsDAwNDa2goXqK6uxuAzMRABMBQhmwIDRLkJAPr2FSt2Nab0AAAAAElFTkSuQmCC", "w": 9, "h": 8}, "folder": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAHCAYAAADam2dgAAAAOUlEQVR42mMUFBT8z4AE3r9/z8iABlgYGBgYWltb4QLV1dX/sSpCBsgaoJoYmBiIANRTxIjuO2wAACZ6DELfu8qKAAAAAElFTkSuQmCC", "w": 9, "h": 7}, "eye": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAR0lEQVR42o2QwQ0AIAgDqRuwfNfsCPjRhBhU7lkaSoEt3D0sIQl2cppKLQskg2RUs2FdqthW/E3Db/Nuj06sJKB7/7N1fvoEudkfG6aulRUAAAAASUVORK5CYII=", "w": 10, "h": 10}, "cloud": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAFCAYAAABxeg0vAAAAO0lEQVR42mNkQAOCgoL/Yez3798zosszoit89+4dXFJISAi7RkFBwf/4gKCg4H+4zYQUo2tkRHYzMQAAnpJV7AJp2TUAAAAASUVORK5CYII=", "w": 12, "h": 5}, "warn": {"src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAICAYAAAArzdW1AAAAO0lEQVR42o2PwQ0AMAgC0Q3Yf0cdgX4bTav3IzEHAgWSwg+SkqR66Fjgr5o7r0w2jc1Ma6aI6KbxZQAH7rAR/at6iHcAAAAASUVORK5CYII=", "w": 9, "h": 8}};
   const $ = (id) => document.getElementById(id);
 
   const listEl = $('list'), countEl = $('count'), statEl = $('stat');
